@@ -18,22 +18,29 @@ Simulator :: struct {
 	displayUpdate  : bool,
 	deltaTime : f64,
 	epoch: u64,
+	toEpoch: bool,
 
 	entities: []Entity
 }
 
+rgb :: proc(r,g,b: u8) -> u32 {
+	r_ := u32(r)
+	g_ := u32(g)
+	b_ := u32(b)
+	return (r_ << 16) | (g_ << 8) | (b_)
+}
 
 refresh :: proc(sim: ^Simulator) {
-	//for X in 0..<DISPLAY.x {
-	//	for Y in 0..<DISPLAY.y {
-	//		for x in X*SCALE..<X*SCALE+SCALE {
-	//			for y in Y*SCALE..<Y*SCALE+SCALE {
-	//				sim.display_screen[x + y*RESOLUTION.x] = (sim.display[X + Y*DISPLAY.x])
-	//			}
-	//		}
-	//	}
-	//}
-	mem.zero(raw_data(&sim.display_screen), len(sim.display_screen)*size_of(sim.display_screen[0]))
+	for X in 0..<GRID.x {
+		for Y in 0..<GRID.y {
+			for x in X*SCALE..<X*SCALE+SCALE {
+				for y in Y*SCALE..<Y*SCALE+SCALE {
+					sim.display_screen[x + y*RESOLUTION.x] = pass_for_evolution(X,Y) ? rgb(20,200,20) : rgb(0,0,0)
+				}
+			}
+		}
+	}
+	//mem.zero(raw_data(&sim.display_screen), len(sim.display_screen)*size_of(sim.display_screen[0]))
 	for &entity in sim.entities {
 		X := entity.pos.x;
 		Y := entity.pos.y;
@@ -64,6 +71,5 @@ makeSimulator :: proc() -> ^Simulator {
 }
 
 evolve :: proc(sim: ^Simulator) {
-	fmt.printfln("Evolving epoch: '% 3d' -> '% 3d'", sim.epoch, sim.epoch+1)
-	sim.epoch += 1;
+	sim.toEpoch = true;
 }

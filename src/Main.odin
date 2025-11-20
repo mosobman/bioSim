@@ -43,6 +43,7 @@ main :: proc() {
             fmt.println("Window State: ", value)
             break
         }
+        if ticks%(60*3) == 0 do sim.toEpoch = true;
 
         simulator.update(sim)
         if sim.displayUpdate do simulator.refresh(sim)
@@ -54,7 +55,7 @@ main :: proc() {
         sim.deltaTime = f64(time.now()._nsec - old) / 1e9
         old = time.now()._nsec
 
-        if ticks%(60*10) == 0 {
+        if ticks%(60*30) == 0 {
             fmt.printfln("FPS: %f", 1.0/sim.deltaTime)
             fmt.printfln("DeltaTime: %f ms", 1000.0*sim.deltaTime)
             for i in 0..<min(len(sim.entities), 5) {

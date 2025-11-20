@@ -55,6 +55,8 @@ tick :: proc(e: ^Entity) {
 	}
 
 	// 4. Wrap around grid
+	pos_x = min(max(pos_x, 0), int(GRID.x)-1)
+	pos_y = min(max(pos_y, 0), int(GRID.y)-1)
 	e.pos.x = uint(((pos_x % int(GRID.x)) + int(GRID.x)) % int(GRID.x))
 	e.pos.y = uint(((pos_y % int(GRID.y)) + int(GRID.y)) % int(GRID.y))
 }
@@ -76,4 +78,31 @@ make_entity :: proc(id: u64, x, y: uint) -> Entity {
 }
 destroy_entity :: proc(e: ^Entity) {
 	destroy_brain(&e.brain)
+}
+
+
+
+
+
+// --- EVOLUTION HELPERS ---
+
+// 1. Randomise inplace
+entity_randomise_brain :: proc(e: ^Entity) {
+	randomize_brain_inplace(&e.brain)
+}
+
+// 2. Slightly mutate
+// rate=0.1 means 10% chance per weight to mutate
+// power=0.2 means the weight changes by a random value between -0.2 and +0.2
+entity_mutate_brain :: proc(e: ^Entity) {
+	mutate_brain_inplace(&e.brain, 0.1, 0.2)
+}
+
+// 3. Overwrite target with source + mutation
+entity_overwrite_brain :: proc(target: ^Entity, source: ^Entity) {
+	// First, copy the brain structure values
+	copy_brain_weights(&target.brain, source.brain)
+	
+	// Then apply mutation to the target so it's not an exact clone
+	entity_mutate_brain(target)
 }
