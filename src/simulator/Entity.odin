@@ -2,10 +2,12 @@ package simulator
 
 import "core:fmt"
 import "core:math/rand"
+import math "core:math"
 
 
 Entity :: struct {
 	pos : [2]uint,
+	brain: Brain,
 	id: u64,
 }
 
