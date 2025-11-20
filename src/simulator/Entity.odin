@@ -17,10 +17,17 @@ tick :: proc(e: ^Entity) {
 	// We normalize inputs by GRID size if possible so they are 0.0 - 1.0.
 	// If inputs are too large (like raw integer coordinates), tanh saturates 
 	// and the brain stops learning/reacting.
-	inputs := make([]f16, 3)
-	inputs[0] = 1.0-(f16(e.pos.x) / f16(GRID.x))
-	inputs[1] = 1.0-(f16(e.pos.y) / f16(GRID.y))
+	inputs := make([]f16, 7)
+	x01 := (f16(e.pos.x) / f16(GRID.x))
+	y01 := (f16(e.pos.y) / f16(GRID.y))
+	inputs[0] = x01*2.0-1.0
+	inputs[1] = y01*2.0-1.0
 	inputs[2] = (f16(rand.float32())) * 2.0 - 1.0
+	
+	inputs[3] = x01
+	inputs[4] = 1.0-x01
+	inputs[5] = y01
+	inputs[6] = 1.0-y01
 	
 	// 2. Process Brain
 	// feedforward allocates a new slice for the result, we must delete it.
@@ -67,8 +74,8 @@ stringify :: proc(entity: ^Entity) -> string {
 }
 
 make_entity :: proc(id: u64, x, y: uint) -> Entity {
-	// 2 Inputs, 2 Outputs, 1 Hidden Layer (4 nodes)
-	brain := create_brain(3, { 5, 8, 8, 5 }, 2)
+	// X Inputs, 2 Outputs, Y Hidden Layer(s)
+	brain := create_brain(7, { 4,4,4,4,4,4 }, 2)
 
 	return Entity{
 		pos = {x, y},
