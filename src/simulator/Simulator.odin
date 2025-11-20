@@ -10,7 +10,7 @@ GRID :: [2]uint{10*R, 9*R}
 SCALE :: 4
 RESOLUTION :: [2]uint{GRID.x*SCALE, GRID.y*SCALE}
 
-ENTITY_COUNT :: 100
+ENTITY_COUNT :: 500
 CYCLE_RATE :: 60
 
 Simulator :: struct {
