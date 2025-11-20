@@ -7,7 +7,7 @@ import "core:math/rand"
 pass_for_evolution :: proc(x_, y_: uint) -> bool {
 	x := f32(x_)-f32(GRID.x)/2.0
 	y := f32(y_)-f32(GRID.y)/2.0
-	return abs(x) <= 25 && abs(y) <= 25
+	return (x*x + y*y) < (25*25)
 }
 
 update :: proc(sim: ^Simulator) {

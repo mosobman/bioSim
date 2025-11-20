@@ -104,5 +104,5 @@ entity_overwrite_brain :: proc(target: ^Entity, source: ^Entity) {
 	copy_brain_weights(&target.brain, source.brain)
 	
 	// Then apply mutation to the target so it's not an exact clone
-	//entity_mutate_brain(target)
+	entity_mutate_brain(target)
 }
