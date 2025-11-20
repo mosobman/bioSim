@@ -6,7 +6,7 @@ import "core:fmt"
 
 
 R :: 12
-GRID :: [2]uint{9*R, 9*R}
+GRID :: [2]uint{10*R, 9*R}
 SCALE :: 4
 RESOLUTION :: [2]uint{GRID.x*SCALE, GRID.y*SCALE}
 
