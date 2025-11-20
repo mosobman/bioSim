@@ -2,6 +2,7 @@ package main
 
 import "core:fmt"
 import "core:c"
+import "core:os"
 import "core:time"
 import simulator "simulator"
 import mfb "minifb"
@@ -21,6 +22,7 @@ keyboard :mfb.keyboard_func: proc(window: ^mfb.window, key: mfb.key, mod: mfb.ke
 sim : ^simulator.Simulator
 
 main :: proc() {
+
     width  := simulator.RESOLUTION.x;
     height := simulator.RESOLUTION.y;
     fmt.printfln("Window Size: (%d, %d) = (%d, %d)*%d", width, height, simulator.GRID.x, simulator.GRID.y, simulator.SCALE)
@@ -34,6 +36,15 @@ main :: proc() {
     mfb.set_keyboard_callback(window, keyboard);
 
     sim = simulator.makeSimulator();
+    fmt.print("Waiting for user to press enter...")
+    buf: [64]u8
+    // Read from stdin handle, until Enter (newline) is typed
+    // Note: read returns number of bytes read
+    n, err := os.read(os.stdin, buf[:])
+    if err != os.ERROR_NONE {
+        fmt.println("\nError reading input:", err)
+        return
+    }
 
     old := time.now()._nsec
     ticks :u64= 0
