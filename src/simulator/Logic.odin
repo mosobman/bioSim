@@ -4,10 +4,10 @@ import "core:fmt"
 import "core:math/rand"
 
 
-pass_for_evolution :: proc(x, y: uint) -> bool {
-	x := f32(x)-f32(GRID.x)/2.0
-	y := f32(y)-f32(GRID.y)/2.0
-	return abs(x) <= 35; // && abs(y) <= 35
+pass_for_evolution :: proc(x_, y_: uint) -> bool {
+	x := f32(x_)-f32(GRID.x)/2.0
+	y := f32(y_)-f32(GRID.y)/2.0
+	return x_ <= 35; // && abs(y) <= 35
 }
 
 update :: proc(sim: ^Simulator) {
@@ -76,7 +76,7 @@ generateRandomEntities :: proc(sim: ^Simulator, count: uint) {
 
 	for &entity in sim.entities {
 		entity = make_entity(
-			rand.uint64(),
+			rand.uint64() & 0xFFFFFF,
 			uint(rand.uint32() % u32(GRID.x)),
 			uint(rand.uint32() % u32(GRID.y))
 		);

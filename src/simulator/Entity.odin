@@ -68,7 +68,7 @@ stringify :: proc(entity: ^Entity) -> string {
 
 make_entity :: proc(id: u64, x, y: uint) -> Entity {
 	// 2 Inputs, 2 Outputs, 1 Hidden Layer (4 nodes)
-	brain := create_brain(3, 2, { 4 })
+	brain := create_brain(3, 2, { 5, 5, 5 })
 
 	return Entity{
 		pos = {x, y},
@@ -95,7 +95,7 @@ entity_randomise_brain :: proc(e: ^Entity) {
 // rate=0.1 means 10% chance per weight to mutate
 // power=0.2 means the weight changes by a random value between -0.2 and +0.2
 entity_mutate_brain :: proc(e: ^Entity) {
-	mutate_brain_inplace(&e.brain, 0.1, 0.2)
+	mutate_brain_inplace(&e.brain, 0.05, 0.1)
 }
 
 // 3. Overwrite target with source + mutation
@@ -104,5 +104,5 @@ entity_overwrite_brain :: proc(target: ^Entity, source: ^Entity) {
 	copy_brain_weights(&target.brain, source.brain)
 	
 	// Then apply mutation to the target so it's not an exact clone
-	entity_mutate_brain(target)
+	//entity_mutate_brain(target)
 }
