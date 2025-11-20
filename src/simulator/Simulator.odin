@@ -17,6 +17,7 @@ Simulator :: struct {
 	display_screen : [RESOLUTION.x*RESOLUTION.y]u32,
 	displayUpdate  : bool,
 	deltaTime : f64,
+	epoch: u64,
 
 	entities: []Entity
 }
@@ -60,4 +61,9 @@ makeSimulator :: proc() -> ^Simulator {
 	fmt.println();
 
 	return sim;
+}
+
+evolve :: proc(sim: ^Simulator) {
+	fmt.printfln("Evolving epoch: '% 3d' -> '% 3d'", sim.epoch, sim.epoch+1)
+	sim.epoch += 1;
 }

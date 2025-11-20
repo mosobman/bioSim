@@ -8,10 +8,12 @@ import mfb "minifb"
 
 
 keyboard :mfb.keyboard_func: proc(window: ^mfb.window, key: mfb.key, mod: mfb.key_mod, isPressed: c.bool) {
-    fmt.println("KEY :", isPressed ? "DOWN" : "UP", ":", key)
+    //fmt.println("KEY :", isPressed ? "DOWN" : "UP", ":", key)
     if (!isPressed) {
         if (key == mfb.key.KEY_ESCAPE) {
             mfb.close(window)
+        } else if (key == mfb.key.KEY_G) {
+            simulator.evolve(sim)
         }
     }
 }
