@@ -36,14 +36,17 @@ main :: proc() {
     mfb.set_keyboard_callback(window, keyboard);
 
     sim = simulator.makeSimulator();
-    fmt.print("Waiting for user to press enter...")
-    buf: [64]u8
-    // Read from stdin handle, until Enter (newline) is typed
-    // Note: read returns number of bytes read
-    n, err := os.read(os.stdin, buf[:])
-    if err != os.ERROR_NONE {
-        fmt.println("\nError reading input:", err)
-        return
+    
+    if false {
+        fmt.print("Waiting for user to press enter...")
+        buf: [64]u8
+        // Read from stdin handle, until Enter (newline) is typed
+        // Note: read returns number of bytes read
+        n, err := os.read(os.stdin, buf[:])
+        if err != os.ERROR_NONE {
+            fmt.println("\nError reading input:", err)
+            return
+        }
     }
 
     old := time.now()._nsec
