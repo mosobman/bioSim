@@ -11,13 +11,17 @@ update :: proc(sim: ^Simulator) {
 }
 
 generateRandomEntities :: proc(sim: ^Simulator, count: uint) {
-	fmt.printfln("Generated %d entities", count)
+	fmt.printfln("Generating %d entities", count)
 
 	sim.entities = make([]Entity, count)
 
 	for &entity in sim.entities {
-		entity.id = rand.uint64();
-		entity.pos.x = uint(rand.uint32() % u32(GRID.x));
-		entity.pos.y = uint(rand.uint32() % u32(GRID.y));
+		entity = make_entity(
+			rand.uint64(),
+			uint(rand.uint32() % u32(GRID.x)),
+			uint(rand.uint32() % u32(GRID.y))
+		);
 	}
+
+	fmt.printfln("Generated %d entities", count)
 }

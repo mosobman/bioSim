@@ -36,8 +36,8 @@ refresh :: proc(sim: ^Simulator) {
 	for &entity in sim.entities {
 		X := entity.pos.x;
 		Y := entity.pos.y;
-		for x in X*SCALE..<X*SCALE+SCALE {
-			for y in Y*SCALE..<Y*SCALE+SCALE {
+		for x in (X*SCALE)..<((X*SCALE)+SCALE) {
+			for y in (Y*SCALE)..<((Y*SCALE)+SCALE) {
 				sim.display_screen[x + y*RESOLUTION.x] = u32(entity.id)
 			}
 		}

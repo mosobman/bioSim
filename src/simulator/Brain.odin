@@ -54,8 +54,9 @@ create_layer :: proc(input_size, output_size: int) -> Layer {
 
     return layer
 }
-create_brain :: proc(input_size, output_size, num_layers: int, nodes_per_layer: []int) -> Brain {
+create_brain :: proc(input_size, output_size: int, nodes_per_layer: []int) -> Brain {
     brain: Brain
+    num_layers := len(nodes_per_layer)
     brain.layers = make([]Layer, num_layers + 1) // hidden layers + output layer
 
     prev_size := input_size
@@ -75,7 +76,10 @@ create_brain :: proc(input_size, output_size, num_layers: int, nodes_per_layer: 
 feedforward :: proc(input: []f16, brain: Brain) -> []f16 {
     current := input
     for layer in brain.layers {
+		prev := current
         current = apply_layer_vectorized(current, layer)
+
+		mem.delete_slice(prev)
     }
     return current
 }
@@ -106,3 +110,6 @@ destroy_brain :: proc(brain: ^Brain) {
         brain.layers = nil
     }
 }
+
+
+
