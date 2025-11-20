@@ -21,7 +21,7 @@ sim : ^simulator.Simulator
 main :: proc() {
     width  := simulator.RESOLUTION.x;
     height := simulator.RESOLUTION.y;
-    fmt.printfln("Window Size: (%d, %d) = (%d, %d)*%d", width, height, simulator.DISPLAY.x, simulator.DISPLAY.y, simulator.SCALE)
+    fmt.printfln("Window Size: (%d, %d) = (%d, %d)*%d", width, height, simulator.GRID.x, simulator.GRID.y, simulator.SCALE)
 
     mfb.set_target_fps(60)
     window := mfb.open_ex("bioSim Odin", cast(c.uint)width, cast(c.uint)height, cast(c.uint)mfb.window_flags.RESIZABLE);
@@ -55,6 +55,10 @@ main :: proc() {
         if ticks%(60*10) == 0 {
             fmt.printfln("FPS: %f", 1.0/sim.deltaTime)
             fmt.printfln("DeltaTime: %f ms", 1000.0*sim.deltaTime)
+            for i in 0..<min(len(sim.entities), 5) {
+                fmt.printfln("  - %s", simulator.stringify(&sim.entities[i]))
+            }
+            if len(sim.entities) >= 5 do fmt.printfln("  - ... (+%d more)", len(sim.entities)-5)
             fmt.printfln("Entity Count: %d", len(sim.entities))
         }
         ticks += 1
