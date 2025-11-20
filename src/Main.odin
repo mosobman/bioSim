@@ -45,7 +45,7 @@ main :: proc() {
         }
 
         // Allow multiple steps per frame (if capable)
-        for s in 0..=1 do simulator.update(sim)
+        for s in 0..=3 do simulator.update(sim)
         if sim.displayUpdate do simulator.refresh(sim)
         
         // avoid burning 100% CPU

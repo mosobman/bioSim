@@ -54,7 +54,7 @@ create_layer :: proc(input_size, output_size: int) -> Layer {
 
     return layer
 }
-create_brain :: proc(input_size, output_size: int, nodes_per_layer: []int) -> Brain {
+create_brain :: proc(input_size: int, nodes_per_layer: []int, output_size: int) -> Brain {
     brain: Brain
     num_layers := len(nodes_per_layer)
     brain.layers = make([]Layer, num_layers + 1) // hidden layers + output layer

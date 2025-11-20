@@ -68,7 +68,7 @@ stringify :: proc(entity: ^Entity) -> string {
 
 make_entity :: proc(id: u64, x, y: uint) -> Entity {
 	// 2 Inputs, 2 Outputs, 1 Hidden Layer (4 nodes)
-	brain := create_brain(3, 2, { 5, 5, 5 })
+	brain := create_brain(3, { 5, 8, 8, 5 }, 2)
 
 	return Entity{
 		pos = {x, y},

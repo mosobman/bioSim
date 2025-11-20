@@ -5,12 +5,12 @@ import "core:math/rand"
 import "core:fmt"
 
 
-R :: 25
-GRID :: [2]uint{16*R, 9*R}
-SCALE :: 2
+R :: 12
+GRID :: [2]uint{9*R, 9*R}
+SCALE :: 4
 RESOLUTION :: [2]uint{GRID.x*SCALE, GRID.y*SCALE}
 
-ENTITY_COUNT :: 1000
+ENTITY_COUNT :: 100
 CYCLE_RATE :: 60
 
 Simulator :: struct {
