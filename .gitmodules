@@ -1,0 +1,3 @@
+[submodule "external/minifb"]
+	path = external/minifb
+	url = git@github.com:mosobman/minifb-builds.git
