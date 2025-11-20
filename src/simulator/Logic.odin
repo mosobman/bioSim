@@ -9,4 +9,6 @@ update :: proc(sim: ^Simulator) {
 
 generateRandomEntities :: proc(sim: ^Simulator, count: uint) {
 	fmt.printfln("Generated %d entities", count)
+
+	sim.entities = make([]Entity, count)
 }

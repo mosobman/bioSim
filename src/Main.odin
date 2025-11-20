@@ -24,7 +24,7 @@ main :: proc() {
     fmt.printfln("Window Size: (%d, %d) = (%d, %d)*%d", width, height, simulator.DISPLAY.x, simulator.DISPLAY.y, simulator.SCALE)
 
     mfb.set_target_fps(60)
-    window := mfb.open_ex("bioSim Odin", cast(c.uint)width, cast(c.uint)height, cast(c.uint)mfb.window_flags.NONE);
+    window := mfb.open_ex("bioSim Odin", cast(c.uint)width, cast(c.uint)height, cast(c.uint)mfb.window_flags.RESIZABLE);
     if window == nil {
         fmt.println("Failed to open window");
         return;
@@ -55,6 +55,7 @@ main :: proc() {
         if ticks%(60*10) == 0 {
             fmt.printfln("FPS: %f", 1.0/sim.deltaTime)
             fmt.printfln("DeltaTime: %f ms", 1000.0*sim.deltaTime)
+            fmt.printfln("Entity Count: %d", len(sim.entities))
         }
         ticks += 1
     }

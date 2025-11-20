@@ -190,14 +190,14 @@ timer :: struct {}
 
 
 // Event callbacks
-active_func           :: proc(window: ^window, isActive: c.bool);
-resize_func           :: proc(window: ^window, width: c.int, height: c.int);
-close_func            :: proc(window: ^window) -> c.bool;
-keyboard_func         :: proc(window: ^window, key: key, mod: key_mod, isPressed: c.bool);
-char_input_func       :: proc(window: ^window, code: c.uint);
-mouse_button_func     :: proc(window: ^window, button: mouse, mod: key_mod, isPressed: c.bool);
-mouse_move_func       :: proc(window: ^window, x: c.int, y: c.int);
-mouse_scroll_func     :: proc(window: ^window, mod: key_mod, deltaX: c.float, deltaY: c.float);
+active_func           :: #type proc(window: ^window, isActive: c.bool);
+resize_func           :: #type proc(window: ^window, width: c.int, height: c.int);
+close_func            :: #type proc(window: ^window) -> c.bool;
+keyboard_func         :: #type proc(window: ^window, key: key, mod: key_mod, isPressed: c.bool);
+char_input_func       :: #type proc(window: ^window, code: c.uint);
+mouse_button_func     :: #type proc(window: ^window, button: mouse, mod: key_mod, isPressed: c.bool);
+mouse_move_func       :: #type proc(window: ^window, x: c.int, y: c.int);
+mouse_scroll_func     :: #type proc(window: ^window, mod: key_mod, deltaX: c.float, deltaY: c.float);
 
 @(link_prefix="mfb_")
 foreign minifb {
