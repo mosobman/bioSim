@@ -11,6 +11,7 @@ pass_for_evolution :: proc(x_, y_: uint) -> bool {
 }
 
 update :: proc(sim: ^Simulator) {
+	if sim.steps%(60*3) == 0 do sim.toEpoch = true;
 	if sim.toEpoch {
 		// 1. Identify Winners Phase
 		winners := make([dynamic]^Entity, 0, len(sim.entities), context.temp_allocator)
@@ -62,11 +63,14 @@ update :: proc(sim: ^Simulator) {
 
 		sim.epoch += 1
 		sim.toEpoch = false
+		sim.steps = 0
 	}
 
 	for &entity in sim.entities {
 		tick(&entity)
 	}
+
+	sim.steps += 1
 }
 
 generateRandomEntities :: proc(sim: ^Simulator, count: uint) {

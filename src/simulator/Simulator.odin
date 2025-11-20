@@ -19,6 +19,7 @@ Simulator :: struct {
 	deltaTime : f64,
 	epoch: u64,
 	toEpoch: bool,
+	steps: uint,
 
 	entities: []Entity
 }

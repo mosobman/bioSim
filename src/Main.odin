@@ -43,9 +43,9 @@ main :: proc() {
             fmt.println("Window State: ", value)
             break
         }
-        if ticks%(60*3) == 0 do sim.toEpoch = true;
 
-        simulator.update(sim)
+        // Allow multiple steps per frame (if capable)
+        for s in 0..=1 do simulator.update(sim)
         if sim.displayUpdate do simulator.refresh(sim)
         
         // avoid burning 100% CPU
