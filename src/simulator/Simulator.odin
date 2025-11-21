@@ -10,8 +10,7 @@ GRID :: [2]uint{10*R, 9*R}
 SCALE :: 4
 RESOLUTION :: [2]uint{GRID.x*SCALE, GRID.y*SCALE}
 
-ENTITY_COUNT :: 500
-CYCLE_RATE :: 60
+ENTITY_COUNT :: 1000
 
 Simulator :: struct {
 	display_screen : [RESOLUTION.x*RESOLUTION.y]u32,
@@ -30,13 +29,17 @@ rgb :: proc(r,g,b: u8) -> u32 {
 	b_ := u32(b)
 	return (r_ << 16) | (g_ << 8) | (b_)
 }
+rgba :: proc(r,g,b,a: u8) -> u32 {
+	a_ := u32(a)
+	return (a_ << 24) | rgb(r,g,b)
+}
 
 refresh :: proc(sim: ^Simulator) {
 	for X in 0..<GRID.x {
 		for Y in 0..<GRID.y {
 			for x in X*SCALE..<X*SCALE+SCALE {
 				for y in Y*SCALE..<Y*SCALE+SCALE {
-					sim.display_screen[x + y*RESOLUTION.x] = pass_for_evolution(X,Y) ? rgb(20,200,20) : rgb(0,0,0)
+					sim.display_screen[x + y*RESOLUTION.x] = pass_for_evolution(X,Y) ? rgb(46, 116, 30) : rgb(0,0,0)
 				}
 			}
 		}
