@@ -2,6 +2,7 @@ package simulator
 
 import "core:thread"
 import "core:fmt"
+import "core:os"
 import "core:math/rand"
 
 
@@ -9,10 +10,11 @@ pass_for_evolution :: proc(x_, y_: uint) -> bool {
 	x := f32(x_)-f32(GRID.x)/3.0
 	x2 := f32(x_)-2.0*f32(GRID.x)/3.0
 	y := f32(y_)-f32(GRID.y)/3.0
+	y1 := f32(y_)-2.0*f32(GRID.y)/3.0
 	x3 := f32(x_)-f32(GRID.x)/2.0
 	y3 := f32(y_)-3.0*f32(GRID.y)/4.0
 	
-	return (x*x + y*y) <= (15*15) || (x2*x2 + y*y) <= (15*15) || (abs(x3) <= 40 && abs(y3) <= 10)
+	return (x*x + y*y) <= (15*15) || (x2*x2 + y1*y1) <= (15*15); // || (abs(x3) <= 40 && abs(y3) <= 10)
 }
 
 generateRandomEntities :: proc(sim: ^Simulator, count: uint) {
@@ -96,10 +98,11 @@ update :: proc(sim: ^Simulator) {
 
 }
 
-
-N_THREADS :: 4
 threaded_tick :: proc(sim: ^Simulator) { // Thread Pool
 	sim.steps += 4
+	system_thread_count := os.processor_core_count();
+	usable_thread_count := max(1, system_thread_count-1)
+
 	task_proc :: proc(t: thread.Task) {
 		tick(transmute(^Entity)t.data)
 		tick(transmute(^Entity)t.data)
@@ -108,7 +111,7 @@ threaded_tick :: proc(sim: ^Simulator) { // Thread Pool
 	}
 
 	pool: thread.Pool
-	thread.pool_init(&pool, allocator=context.allocator, thread_count=N_THREADS)
+	thread.pool_init(&pool, allocator=context.allocator, thread_count=usable_thread_count)
 	defer thread.pool_destroy(&pool)
 
 
